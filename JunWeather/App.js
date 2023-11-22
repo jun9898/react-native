@@ -1,20 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View} from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>신기해용</Text>
-      <StatusBar style="auto" />
-    </View>
+      <View style={{ flex: 1, flexDirection: "row"}}>
+        <View style={{ flex: 1, flexDirection: "row"}}>
+          {/* 재 밌 다 */}
+          {/* flex는 화면을 비율로 나눌 수 있음 */}
+          <View style={{flex: 1, backgroundColor:"tomato"}}></View>
+          <View style={{flex: 1, backgroundColor:"teal"}}></View>
+          <View style={{flex: 1, backgroundColor:"orange"}}></View>
+        </View>
+        <View style={{ flex: 1, flexDirection: "row"}}>
+          <View style={{flex: 1, backgroundColor:"tomato"}}></View>
+          <View style={{flex: 1, backgroundColor:"teal"}}></View>
+          <View style={{flex: 1, backgroundColor:"orange"}}></View>
+        </View>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
