@@ -4,10 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  Pressable,
-  TextInput
+  TextInput,
+  ScrollView
 } from 'react-native';
 import {theme} from "./color";
 import {useEffect, useState} from "react";
@@ -15,13 +13,34 @@ import {useEffect, useState} from "react";
 export default function App() {
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
+  const [toDos, setToDos] = useState({});
   const travel = () => setWorking(false);
   const work = () => setWorking(true);
   const onChangeText = (payload) => setText(payload);
+  const addToDo = () => {
+    if (text === "") {
+      return
+    }
+/*
+    const newToDos = Object.assign({}, toDos, {
+      [Date.now()]: {text, work: working}});
+    Object.assign 말고 다른 방법이 있단다
+    뭔가 했더니 스프레드 연산자였다
+*/
+    const newToDos = {
+      ...toDos,
+      [Date.now()]: {text, work: working}
+    }
+
+    setToDos(newToDos);
+    setText("");
+    console.log(newToDos);
+  }
+
 
   useEffect(() => {
     working
-  }, [console.log(working)]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -36,16 +55,18 @@ export default function App() {
         </TouchableOpacity>
       </View>
         <TextInput
-/*
-            안된당
-            returnKeyType="send"
-*/
+            onSubmitEditing={addToDo}
             value={text}
             onChangeText={onChangeText}
-            multiline
             placeholder={working ? "Add a To Do" : "Where do you want to go?"}
             style={styles.input}>
         </TextInput>
+      <ScrollView>
+        {Object.keys(toDos).map(key =>
+        <View style={styles.toDo} key={key}>
+          <Text style={styles.toDoText}>{toDos[key].text}</Text>
+        </View>)}
+      </ScrollView>
     </View>
   );
 }
@@ -73,6 +94,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 10,
     fontSize: 18,
-  }
+  },
+  toDo: {
 
+  },
+  toDoText: {
+    color: "white"
+  },
 });
